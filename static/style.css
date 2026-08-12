@@ -1,1 +1,125 @@
+/* 🌈 Background */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+}
 
+/* LOGIN */
+.login-container {
+    width: 350px;
+    margin: 120px auto;
+    padding: 25px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    text-align: center;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 10px 20px;
+    background: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    padding: 15px;
+    font-size: 24px;
+    background: rgba(0,0,0,0.3);
+}
+
+/* TOP */
+.top-section {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.chart-card, .info-card {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/* SMALL PIE */
+.chart-card canvas {
+    max-width: 220px;
+    max-height: 220px;
+    margin: auto;
+    display: block;
+}
+
+/* LOADER */
+.loader {
+    border: 6px solid #eee;
+    border-top: 6px solid #4CAF50;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+/* BOTTOM */
+.bottom-section {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+}
+
+.mail-section {
+    flex: 1;
+    padding: 15px;
+    border-radius: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* HEADINGS FIX */
+.mail-section h3 {
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    color: white;
+}
+
+/* COLORS */
+.spam { background: rgba(255,77,77,0.2); }
+.ham { background: rgba(76,175,80,0.2); }
+.suspicious { background: rgba(33,150,243,0.2); }
+
+.spam h3 { background: #ff4d4d; }
+.ham h3 { background: #4CAF50; }
+.suspicious h3 { background: #2196F3; }
+
+/* MAIL */
+.mail {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(10px);}
+    to {opacity:1;}
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Email Spam Classifier</title>
+<link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+
+<div class="login-container">
+    <h2>📧 Email Spam Classification System</h2>
+
+    <input type="email" id="email" placeholder="Enter Gmail">
+    <input type="password" id="password" placeholder="Enter App Password">
+
+    <button onclick="goToResult()">Analyze Emails</button>
+</div>
+
+<script>
+function goToResult() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        alert("Enter details!");
+        return;
+    }
+
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
+
+    window.location.href = "result.html";
+}
+</script>
+
+</body>
+</html>

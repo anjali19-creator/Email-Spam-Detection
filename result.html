@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="static/style.css">
+
+</head>
+
+<body>
+
+<div class="header">
+    📊 Email Spam Analysis Dashboard
+</div>
+
+<!-- TOP SECTION -->
+<div class="top-section">
+
+    <!-- LEFT -->
+    <div class="chart-card">
+        <h3>Distribution</h3>
+        <canvas id="pieChart"></canvas>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="info-card" id="infoBox">
+        <div class="loader"></div>
+        <p>Analyzing emails...</p>
+    </div>
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom-section">
+
+    <div class="mail-section spam" id="spamBox">
+        <h3>🚫 Spam</h3>
+    </div>
+
+    <div class="mail-section suspicious" id="suspiciousBox">
+        <h3>⚠️ Suspicious</h3>
+    </div>
+
+    <div class="mail-section ham" id="hamBox">
+        <h3>✅ Ham</h3>
+    </div>
+
+</div>
+
+<script>
+window.onload = async function () {
+
+    let email = localStorage.getItem("email");
+    let password = localStorage.getItem("password");
+
+    let infoBox = document.getElementById("infoBox");
+    let spamBox = document.getElementById("spamBox");
+    let hamBox = document.getElementById("hamBox");
+    let suspiciousBox = document.getElementById("suspiciousBox");
+
+    try {
+
+        let res = await fetch("http://127.0.0.1:5000/check_gmail", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ email, password })
+        });
+
+        let data = await res.json();
+
+        // INFO
+        infoBox.innerHTML = `
+            <h2>Total Emails: ${data.total}</h2>
+            <p>🚫 Spam: ${data.spam.length}</p>
+            <p>⚠️ Suspicious: ${data.suspicious.length}</p>
+            <p>✅ Ham: ${data.ham.length}</p>
+        `;
+
+        // MAILS
+        data.spam.forEach(m => {
+            spamBox.innerHTML += `
+                <div class="mail">
+                    <b>${m.subject}</b><br>
+                    Confidence: ${m.confidence}%
+                </div>`;
+        });
+
+        data.ham.forEach(m => {
+            hamBox.innerHTML += `
+                <div class="mail">
+                    <b>${m.subject}</b><br>
+                    Confidence: ${m.confidence}%
+                </div>`;
+        });
+
+        data.suspicious.forEach(m => {
+            suspiciousBox.innerHTML += `
+                <div class="mail">
+                    <b>${m.subject}</b><br>
+                    Confidence: ${m.confidence}%
+                </div>`;
+        });
+
+        // PIE CHART
+        new Chart(document.getElementById("pieChart"), {
+            type: "pie",
+            data: {
+                labels: ["Spam", "Ham", "Suspicious"],
+                datasets: [{
+                    data: [
+                        data.spam.length,
+                        data.ham.length,
+                        data.suspicious.length
+                    ],
+                    backgroundColor: [
+                        "#ff4d4d",
+                        "#4CAF50",
+                        "#2196F3"
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    } catch (e) {
+        infoBox.innerHTML = "❌ Server error";
+    }
+}
+</script>
+
+</body>
+</html>
